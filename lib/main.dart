@@ -4,6 +4,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:tasks_app_bloc/bloc/bloc/task_bloc.dart';
 import 'package:tasks_app_bloc/screens/tasks_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasks_app_bloc/services/app-route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,11 +12,20 @@ void main() async {
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
 
-  runApp(const MyApp());
+  runApp(
+    MyApp(
+      appRoute: AppRoute(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+    required this.appRoute,
+  });
+
+  final AppRoute appRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +45,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        onGenerateRoute: appRoute.onRouteGenerate,
         home: const TasksScreen(),
       ),
     );
