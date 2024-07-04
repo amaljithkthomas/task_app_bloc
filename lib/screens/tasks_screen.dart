@@ -27,7 +27,10 @@ class TasksScreen extends StatelessWidget {
               )
             ],
           ),
-          drawer: const TaskDrawer(),
+          drawer: TaskDrawer(
+            taskLength: state.allTasks.length.toString(),
+            removedTaskList: state.removedTasks.length.toString(),
+          ),
           body: Builder(builder: (context) {
             if (state.allTasks.isEmpty) {
               return const Center(

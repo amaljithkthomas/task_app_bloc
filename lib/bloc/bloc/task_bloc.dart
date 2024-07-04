@@ -1,6 +1,3 @@
-
-
-
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:tasks_app_bloc/models/task.dart';
@@ -25,12 +22,16 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     on<UpdateTaskEvent>(_onUpdateTaskEvent);
 
     on<DeleteTaskEvent>(_onDeleteTask);
+    on<RemoveTaskEvent>(_onRemoveTask);
   }
 
   void _onAddTaskEvent(AddTaskEvent event, Emitter<TaskState> emit) {
     final allList = List<Task>.from(state.allTasks)..add(event.task);
 
-    emit(TaskState(allTasks: allList));
+    emit(TaskState(
+      allTasks: allList,
+      removedTasks: state.removedTasks,
+    ));
   }
 
   void _onUpdateTaskEvent(UpdateTaskEvent event, Emitter<TaskState> emit) {
@@ -40,11 +41,23 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
     task.isDone == false
         ? allList.insert(index, task.copyWith(isDone: true))
         : allList.insert(index, task.copyWith(isDone: false));
-    emit(TaskState(allTasks: allList));
+    emit(TaskState(
+      allTasks: allList,
+      removedTasks: state.removedTasks,
+    ));
   }
 
   void _onDeleteTask(DeleteTaskEvent event, Emitter<TaskState> emit) {
-    List<Task> allList = List.from(state.allTasks)..remove(event.task);
-    emit(TaskState(allTasks: allList));
+    final task = event.task;
+    List<Task> allList = List.from(state.allTasks)..remove(task);
+    List<Task> removedTaskList = List.from(state.removedTasks)
+      ..add(task.copyWith(isDeleted: true));
+    emit(TaskState(allTasks: allList, removedTasks: removedTaskList));
+  }
+
+  void _onRemoveTask(RemoveTaskEvent event, Emitter<TaskState> emit) {
+    List<Task> removedTaskList = List.from(state.removedTasks)
+      ..remove(event.task);
+    emit(TaskState(allTasks: state.allTasks, removedTasks: removedTaskList));
   }
 }

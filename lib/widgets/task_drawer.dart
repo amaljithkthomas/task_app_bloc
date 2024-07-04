@@ -3,7 +3,13 @@ import 'package:tasks_app_bloc/screens/recycle_bin.dart';
 import 'package:tasks_app_bloc/screens/tasks_screen.dart';
 
 class TaskDrawer extends StatelessWidget {
-  const TaskDrawer({Key? key}) : super(key: key);
+  const TaskDrawer({
+    Key? key,
+    this.taskLength,
+    this.removedTaskList,
+  }) : super(key: key);
+  final String? taskLength;
+  final String? removedTaskList;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +37,11 @@ class TaskDrawer extends StatelessWidget {
                 context,
                 TasksScreen.screenId,
               ),
-              child: const Card(
+              child: Card(
                 child: ListTile(
-                  leading: Icon(Icons.folder_special),
-                  title: Text('Tasks'),
-                  trailing: Text('0'),
+                  leading: const Icon(Icons.folder_special),
+                  title: const Text('Tasks'),
+                  trailing: Text(taskLength ?? '0'),
                 ),
               ),
             ),
@@ -51,7 +57,7 @@ class TaskDrawer extends StatelessWidget {
                     color: theme.colorScheme.error,
                   ),
                   title: const Text('Bin'),
-                  trailing: const Text('0'),
+                  trailing: Text(removedTaskList ?? '0'),
                 ),
               ),
             )
