@@ -14,16 +14,19 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   late TextEditingController _titleController;
+  late TextEditingController _descController;
 
   @override
   void initState() {
     _titleController = TextEditingController();
+    _descController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
     _titleController.dispose();
+    _descController.dispose();
     super.dispose();
   }
 
@@ -56,15 +59,26 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 const SizedBox(
                   height: 10,
                 ),
+                TextField(
+                  autofocus: false,
+                  controller: _descController,
+                  minLines: 3,
+                  maxLines: 5,
+                  decoration: const InputDecoration(
+                      label: Text('Description'), border: OutlineInputBorder()),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
                       onPressed: () {
                         final task = Task(
-                          title: _titleController.text.trim(),
-                          id: DateTime.now().toIso8601String(),
-                        );
+                            title: _titleController.text.trim(),
+                            id: DateTime.now().toIso8601String(),
+                            description: _descController.text.trim());
                         context.read<TaskBloc>().add(AddTaskEvent(task: task));
                         Navigator.pop(context);
                       },

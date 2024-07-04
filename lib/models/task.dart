@@ -2,14 +2,16 @@ import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
 class Task extends Equatable {
-  final String title;
   final String id;
+  final String title;
+  final String description;
   bool? isDone;
   bool? isDeleted;
 
   Task({
     required this.title,
     required this.id,
+    required this.description,
     this.isDone,
     this.isDeleted,
   }) {
@@ -22,9 +24,11 @@ class Task extends Equatable {
     String? id,
     bool? isDone,
     bool? isDeleted,
+    String? description,
   }) {
     return Task(
       title: title ?? this.title,
+      description: description ?? this.description,
       id: id ?? this.id,
       isDone: isDone ?? this.isDone,
       isDeleted: isDeleted ?? this.isDeleted,
@@ -35,6 +39,7 @@ class Task extends Equatable {
     return <String, dynamic>{
       'title': title,
       'id': id,
+      'description': description,
       'isDone': isDone,
       'isDeleted': isDeleted,
     };
@@ -44,6 +49,7 @@ class Task extends Equatable {
     return Task(
       title: map['title'] as String,
       id: map['id'] as String,
+      description: map['description'] as String,
       isDone: map['isDone'] != null ? map['isDone'] as bool : null,
       isDeleted: map['isDeleted'] != null ? map['isDeleted'] as bool : null,
     );
@@ -53,6 +59,7 @@ class Task extends Equatable {
   List<Object?> get props => [
         title,
         id,
+        description,
         isDone,
         isDeleted,
       ];
