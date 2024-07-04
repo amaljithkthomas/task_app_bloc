@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_app_bloc/blocs/switch_bloc/switch_cubit.dart';
 import 'package:tasks_app_bloc/screens/recycle_bin.dart';
 import 'package:tasks_app_bloc/screens/tasks_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskDrawer extends StatelessWidget {
   const TaskDrawer({
@@ -33,7 +35,7 @@ class TaskDrawer extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(
+              onTap: () => Navigator.pushReplacementNamed(
                 context,
                 TasksScreen.screenId,
               ),
@@ -46,7 +48,7 @@ class TaskDrawer extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(
+              onTap: () => Navigator.pushReplacementNamed(
                 context,
                 RecycleBin.screenId,
               ),
@@ -60,6 +62,17 @@ class TaskDrawer extends StatelessWidget {
                   trailing: Text(removedTaskList ?? '0'),
                 ),
               ),
+            ),
+            BlocBuilder<SwitchCubit, SwitchState>(
+              builder: (context, state) {
+                return Switch(
+                    value: state.switchState,
+                    onChanged: (newValue) {
+                      state.switchState
+                          ? context.read<SwitchCubit>().switchOff()
+                          : context.read<SwitchCubit>().switchOn();
+                    });
+              },
             )
           ],
         ),
