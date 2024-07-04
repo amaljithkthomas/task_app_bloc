@@ -15,17 +15,18 @@ class RecycleBin extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
             appBar: AppBar(
-              title: const Text('Task App'),
+              title: const Text('Recycle Bin'),
             ),
             drawer: TaskDrawer(
-              taskLength: state.allTasks.length.toString(),
+              pendingTaskLength: state.pendingTasks.length.toString(),
               removedTaskList: state.removedTasks.length.toString(),
             ),
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Center(
-                  child: Chip(label: Text('Recycle Bin')),
+                Center(
+                  child:
+                      Chip(label: Text('${state.removedTasks.length} Tasks')),
                 ),
                 Expanded(
                   child: TaskList(taskList: state.removedTasks),

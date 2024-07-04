@@ -26,38 +26,68 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
   }
 
   void _onAddTaskEvent(AddTaskEvent event, Emitter<TaskState> emit) {
-    final allList = List<Task>.from(state.allTasks)..add(event.task);
+    final pendingTaskList = List<Task>.from(state.pendingTasks)
+      ..add(event.task);
 
     emit(TaskState(
-      allTasks: allList,
+      pendingTasks: pendingTaskList,
       removedTasks: state.removedTasks,
+      completedTasks: state.completedTasks,
+      favouriteTasks: state.favouriteTasks,
     ));
   }
 
   void _onUpdateTaskEvent(UpdateTaskEvent event, Emitter<TaskState> emit) {
     final task = event.task;
-    final index = state.allTasks.indexOf(task);
-    List<Task> allList = List.from(state.allTasks)..remove(task);
+    // final index = state.pendingTasks.indexOf(task);
+    List<Task> pendingTaskList = state.pendingTasks;
+    List<Task> completedTaskList = state.completedTasks;
+
     task.isDone == false
-        ? allList.insert(index, task.copyWith(isDone: true))
-        : allList.insert(index, task.copyWith(isDone: false));
+        ? {
+            pendingTaskList = List<Task>.from(pendingTaskList)..remove(task),
+            completedTaskList = List<Task>.from(completedTaskList)
+              ..insert(0, task.copyWith(isDone: true)),
+          }
+        : {
+            completedTaskList = List<Task>.from(completedTaskList)
+              ..remove(task),
+            pendingTaskList = List<Task>.from(pendingTaskList)
+              ..insert(0, task.copyWith(isDone: false)),
+          };
     emit(TaskState(
-      allTasks: allList,
+      pendingTasks: pendingTaskList,
       removedTasks: state.removedTasks,
+      completedTasks: completedTaskList,
+      favouriteTasks: state.favouriteTasks,
     ));
   }
 
   void _onDeleteTask(DeleteTaskEvent event, Emitter<TaskState> emit) {
     final task = event.task;
-    List<Task> allList = List.from(state.allTasks)..remove(task);
+    List<Task> pendingTaskList = List.from(state.pendingTasks)..remove(task);
     List<Task> removedTaskList = List.from(state.removedTasks)
       ..add(task.copyWith(isDeleted: true));
-    emit(TaskState(allTasks: allList, removedTasks: removedTaskList));
+    List<Task> completedTaskList = List.from(state.completedTasks)
+      ..remove(task);
+    List<Task> favouriteTaskList = List.from(state.favouriteTasks)
+      ..remove(task);
+    emit(TaskState(
+      pendingTasks: pendingTaskList,
+      removedTasks: removedTaskList,
+      completedTasks: completedTaskList,
+      favouriteTasks: favouriteTaskList,
+    ));
   }
 
   void _onRemoveTask(RemoveTaskEvent event, Emitter<TaskState> emit) {
     List<Task> removedTaskList = List.from(state.removedTasks)
       ..remove(event.task);
-    emit(TaskState(allTasks: state.allTasks, removedTasks: removedTaskList));
+    emit(TaskState(
+      pendingTasks: state.pendingTasks,
+      removedTasks: removedTaskList,
+      completedTasks: state.completedTasks,
+      favouriteTasks: state.favouriteTasks,
+    ));
   }
 }

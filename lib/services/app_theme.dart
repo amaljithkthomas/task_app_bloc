@@ -11,10 +11,10 @@ class AppThemes {
       primarySwatch: Colors.grey,
       primaryColor: Colors.black,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.dark(
-        primary: Colors.blueGrey.shade900,
-        secondary: const Color.fromRGBO(74, 24, 154, 1),
-        onPrimary: Colors.blueGrey.shade900,
+      colorScheme: const ColorScheme.dark(
+        primary: Colors.white,
+        secondary: Color.fromRGBO(74, 24, 154, 1),
+        onPrimary: Colors.blueAccent,
         primaryContainer: Colors.black,
       ),
       appBarTheme: const AppBarTheme(
@@ -53,11 +53,16 @@ class AppThemes {
       primaryColor: Colors.white,
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
-        primary: Colors.blueGrey.shade200,
-        onPrimary: Colors.blueGrey.shade200,
-        secondary: const Color.fromRGBO(74, 24, 154, 1),
-        primaryContainer: Colors.blueGrey.shade800,
-      ),
+          primary: Colors.grey.shade600,
+          onPrimary: Colors.blue,
+          primaryContainer: Colors.red,
+          onPrimaryContainer: Colors.black,
+          secondary: const Color.fromRGBO(74, 24, 154, 1),
+          secondaryContainer: Colors.indigoAccent,
+          onSecondary: Colors.deepPurple,
+          onSecondaryContainer: Colors.deepPurpleAccent,
+          tertiary: Colors.indigo,
+          tertiaryContainer: Colors.teal),
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.purpleAccent.shade400,
         titleTextStyle: const TextStyle(

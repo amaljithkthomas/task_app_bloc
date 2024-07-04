@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_bloc/blocs/switch_bloc/switch_cubit.dart';
 import 'package:tasks_app_bloc/screens/recycle_bin.dart';
-import 'package:tasks_app_bloc/screens/tasks_screen.dart';
+import 'package:tasks_app_bloc/screens/pending_tasks_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskDrawer extends StatelessWidget {
   const TaskDrawer({
     Key? key,
-    this.taskLength,
+    this.pendingTaskLength,
+    this.completedTaskLength,
     this.removedTaskList,
   }) : super(key: key);
-  final String? taskLength;
+  final String? pendingTaskLength;
+  final String? completedTaskLength;
   final String? removedTaskList;
 
   @override
@@ -37,13 +39,14 @@ class TaskDrawer extends StatelessWidget {
             GestureDetector(
               onTap: () => Navigator.pushReplacementNamed(
                 context,
-                TasksScreen.screenId,
+                PendingTaskScreen.screenId,
               ),
               child: Card(
                 child: ListTile(
                   leading: const Icon(Icons.folder_special),
                   title: const Text('Tasks'),
-                  trailing: Text(taskLength ?? '0'),
+                  trailing: Text(
+                      '${pendingTaskLength ?? 0} | ${completedTaskLength ?? 0}'),
                 ),
               ),
             ),

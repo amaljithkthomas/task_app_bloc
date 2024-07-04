@@ -3,8 +3,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tasks_app_bloc/blocs/switch_bloc/switch_cubit.dart';
 import 'package:tasks_app_bloc/blocs/task_bloc/task_bloc.dart';
-
-import 'package:tasks_app_bloc/screens/tasks_screen.dart';
+import 'package:tasks_app_bloc/screens/tab_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_app_bloc/services/app-route.dart';
 import 'package:tasks_app_bloc/services/app_theme.dart';
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
               ),
             ),*/
             onGenerateRoute: appRoute.onRouteGenerate,
-            home: const TasksScreen(),
+            home: const TabScreen(),
           );
         },
       ),
