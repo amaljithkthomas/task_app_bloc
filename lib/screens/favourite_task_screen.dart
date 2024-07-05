@@ -22,9 +22,7 @@ class FavouriteTaskScreen extends StatelessWidget {
             Center(
               child: Chip(label: Text('${state.favouriteTasks.length} Tasks')),
             ),
-            Expanded(
-              child: TaskList(taskList: state.favouriteTasks),
-            )
+            TaskList(taskList: state.favouriteTasks)
           ],
         );
       },

@@ -22,9 +22,7 @@ class CompletedTaskScreen extends StatelessWidget {
             Center(
               child: Chip(label: Text('${state.completedTasks.length} Tasks')),
             ),
-            Expanded(
-              child: TaskList(taskList: state.completedTasks),
-            )
+            TaskList(taskList: state.completedTasks)
           ],
         );
       },

@@ -24,9 +24,7 @@ class PendingTaskScreen extends StatelessWidget {
                   label: Text(
                       '${state.pendingTasks.length} Pending | ${state.completedTasks.length} Completed ')),
             ),
-            Expanded(
-              child: TaskList(taskList: state.pendingTasks),
-            )
+            TaskList(taskList: state.pendingTasks)
           ],
         );
       },

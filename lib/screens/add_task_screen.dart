@@ -76,9 +76,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     ElevatedButton(
                       onPressed: () {
                         final task = Task(
-                            title: _titleController.text.trim(),
-                            id: DateTime.now().toIso8601String(),
-                            description: _descController.text.trim());
+                          title: _titleController.text.trim(),
+                          id: DateTime.now().toIso8601String(),
+                          description: _descController.text.trim(),
+                          date: DateTime.now().toIso8601String(),
+                        );
                         context.read<TaskBloc>().add(AddTaskEvent(task: task));
                         Navigator.pop(context);
                       },

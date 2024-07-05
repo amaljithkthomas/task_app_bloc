@@ -12,48 +12,50 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: ExpansionPanelList.radio(
-        dividerColor: Colors.transparent,
-        children: taskList
-            .map(
-              (task) => ExpansionPanelRadio(
-                value: task.id,
-                headerBuilder: (context, isOpen) => TaskTile(
-                  task: task,
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: ExpansionPanelList.radio(
+          dividerColor: Colors.transparent,
+          children: taskList
+              .map(
+                (task) => ExpansionPanelRadio(
+                  value: task.id,
+                  headerBuilder: (context, isOpen) => TaskTile(
+                    task: task,
                   ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: SelectableText.rich(
-                      TextSpan(
-                        children: [
-                          const TextSpan(
-                            text: 'Text\n',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                  body: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: SelectableText.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Text\n',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          TextSpan(text: task.title),
-                          const TextSpan(
-                            text: '\nDescription\n',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                            TextSpan(text: task.title),
+                            const TextSpan(
+                              text: '\nDescription\n',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          TextSpan(text: task.description),
-                        ],
+                            TextSpan(text: task.description),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+        ),
       ),
     );
 

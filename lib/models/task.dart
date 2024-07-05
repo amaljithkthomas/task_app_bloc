@@ -5,31 +5,40 @@ class Task extends Equatable {
   final String id;
   final String title;
   final String description;
+  final String date;
   bool? isDone;
   bool? isDeleted;
+  bool? isFavourite;
 
   Task({
     required this.title,
     required this.id,
     required this.description,
+    required this.date,
     this.isDone,
     this.isDeleted,
+    this.isFavourite,
   }) {
     isDone = isDone ?? false;
     isDeleted = isDeleted ?? false;
+    isFavourite = isFavourite ?? false;
   }
 
   Task copyWith({
     String? title,
     String? id,
+    String? date,
     bool? isDone,
     bool? isDeleted,
     String? description,
+    bool? isFavourite,
   }) {
     return Task(
       title: title ?? this.title,
       description: description ?? this.description,
       id: id ?? this.id,
+      date: date ?? this.date,
+      isFavourite: isFavourite ?? this.isFavourite,
       isDone: isDone ?? this.isDone,
       isDeleted: isDeleted ?? this.isDeleted,
     );
@@ -39,9 +48,11 @@ class Task extends Equatable {
     return <String, dynamic>{
       'title': title,
       'id': id,
+      'date': date,
       'description': description,
       'isDone': isDone,
       'isDeleted': isDeleted,
+      'isFavourite': isFavourite,
     };
   }
 
@@ -50,8 +61,11 @@ class Task extends Equatable {
       title: map['title'] as String,
       id: map['id'] as String,
       description: map['description'] as String,
+      date: map['date'] as String,
       isDone: map['isDone'] != null ? map['isDone'] as bool : null,
       isDeleted: map['isDeleted'] != null ? map['isDeleted'] as bool : null,
+      isFavourite:
+          map['isFavourite'] != null ? map['isFavourite'] as bool : null,
     );
   }
 
@@ -60,7 +74,9 @@ class Task extends Equatable {
         title,
         id,
         description,
+        date,
         isDone,
         isDeleted,
+        isFavourite,
       ];
 }

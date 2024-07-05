@@ -28,9 +28,7 @@ class RecycleBin extends StatelessWidget {
                   child:
                       Chip(label: Text('${state.removedTasks.length} Tasks')),
                 ),
-                Expanded(
-                  child: TaskList(taskList: state.removedTasks),
-                )
+                TaskList(taskList: state.removedTasks)
               ],
             ));
       },

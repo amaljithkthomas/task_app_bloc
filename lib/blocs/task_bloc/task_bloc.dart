@@ -23,6 +23,7 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
 
     on<DeleteTaskEvent>(_onDeleteTask);
     on<RemoveTaskEvent>(_onRemoveTask);
+    on<MarkFavouriteTaskEvent>(_markFavouriteTaskEvent);
   }
 
   void _onAddTaskEvent(AddTaskEvent event, Emitter<TaskState> emit) {
@@ -89,5 +90,13 @@ class TaskBloc extends HydratedBloc<TaskEvent, TaskState> {
       completedTasks: state.completedTasks,
       favouriteTasks: state.favouriteTasks,
     ));
+  }
+
+  void _markFavouriteTaskEvent(
+      MarkFavouriteTaskEvent event, Emitter<TaskState> emit) {
+    final state = this.state;
+    final pendingTaskList = state.pendingTasks;
+    final removedTaskList = state.removedTasks;
+    final completedTaskList = state.completedTasks;
   }
 }
