@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_app_bloc/blocs/task_bloc/task_bloc.dart';
+
 import 'package:tasks_app_bloc/models/task.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PopupMenu extends StatelessWidget {
-  const PopupMenu({
-    super.key,
-    required this.task,
-    this.deleteFunction,
-  });
+  const PopupMenu(
+      {super.key,
+      required this.task,
+      this.deleteFunction,
+      this.favFunction,
+      this.editFunction,
+      this.restoreFunction});
 
   final Task task;
   final void Function()? deleteFunction;
+  final void Function()? favFunction;
+  final void Function()? editFunction;
+  final void Function()? restoreFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class PopupMenu extends StatelessWidget {
       itemBuilder: (context) => task.isDeleted == true
           ? [
               PopupMenuItem(
-                onTap: () {},
+                onTap: restoreFunction,
                 child: const Row(
                   children: [
                     Icon(Icons.restore_from_trash),
@@ -58,37 +62,41 @@ class PopupMenu extends StatelessWidget {
             ]
           : [
               PopupMenuItem(
-                onTap: () {},
-                child: const Row(
-                  children: [
-                    Icon(Icons.edit),
-                    SizedBox(
-                      width: 5,
+                onTap: editFunction,
+                child: const Row(children: [
+                  Icon(Icons.edit),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Edit',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
-                    Text(
-                      'Edit',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ]),
               ),
               PopupMenuItem(
-                onTap: () {},
-                child: const Row(
+                onTap: favFunction,
+                child: Row(
                   children: [
-                    Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    SizedBox(
+                    task.isFavourite == false
+                        ? const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          )
+                        : const Icon(
+                            Icons.star_outline,
+                          ),
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
-                      'Add to favourite',
-                      style: TextStyle(
+                      task.isFavourite == false
+                          ? 'Add to favourite'
+                          : 'Remove from favourite',
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),

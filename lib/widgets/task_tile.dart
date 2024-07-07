@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tasks_app_bloc/blocs/task_bloc/task_bloc.dart';
 import 'package:tasks_app_bloc/models/task.dart';
 import 'package:intl/intl.dart';
+import 'package:tasks_app_bloc/screens/edit_task_screen.dart';
 import 'package:tasks_app_bloc/widgets/popup_menu.dart';
 
 class TaskTile extends StatelessWidget {
@@ -11,14 +12,20 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: Row(
             children: [
-              const Icon(Icons.star_outline),
+              task.isFavourite == true
+                  ? const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    )
+                  : const Icon(
+                      Icons.star_outline,
+                    ),
               const SizedBox(
                 width: 10,
               ),
@@ -57,9 +64,23 @@ class TaskTile extends StatelessWidget {
           deleteFunction: () => task.isDeleted!
               ? context.read<TaskBloc>().add(RemoveTaskEvent(task: task))
               : context.read<TaskBloc>().add(DeleteTaskEvent(task: task)),
+          favFunction: () =>
+              context.read<TaskBloc>().add(MarkFavouriteTaskEvent(task: task)),
+          editFunction: () => _editTask(context),
+          restoreFunction: () =>
+              context.read<TaskBloc>().add(RestoreTaskEvent(task: task)),
         )
       ],
     );
+  }
+
+  void _editTask(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return EditTaskScreen(oldTask: task);
+        });
   }
 }
 

@@ -51,3 +51,28 @@ class MarkFavouriteTaskEvent extends TaskEvent {
   @override
   List<Object> get props => [task];
 }
+
+class EditTaskEvent extends TaskEvent {
+  const EditTaskEvent({
+    required this.oldTask,
+    required this.newTask,
+  });
+  final Task oldTask;
+  final Task newTask;
+  @override
+  List<Object> get props => [
+        oldTask,
+        newTask,
+      ];
+}
+
+class RestoreTaskEvent extends TaskEvent {
+  const RestoreTaskEvent({
+    required this.task,
+  });
+  final Task task;
+  @override
+  List<Object> get props => [task];
+}
+
+class DeleteAllTask extends TaskEvent {}

@@ -11,11 +11,22 @@ class RecycleBin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
         return Scaffold(
             appBar: AppBar(
               title: const Text('Recycle Bin'),
+              actions: [
+                IconButton(
+                  onPressed: () =>
+                      context.read<TaskBloc>().add(DeleteAllTask()),
+                  icon: Icon(
+                    Icons.delete_forever_outlined,
+                    color: theme.colorScheme.background,
+                  ),
+                )
+              ],
             ),
             drawer: TaskDrawer(
               pendingTaskLength: state.pendingTasks.length.toString(),
